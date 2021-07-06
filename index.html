@@ -23,18 +23,19 @@
 </html>
 
 <script>
-    let globalFishTotal=0;
+    let globalFishTotal=0,
+    screenWidth=600;
+
 
 function Fish (id, x, y ){
-    this.x=Math.floor(Math.random()*100)
-    this.y=5;
+    this.x=Math.floor(Math.random()*600)
+    this.y=Math.floor(Math.random()*350);
     this.class='guppy';
     this.id=globalFishTotal;
-    this.speed=1;
+    this.xSpeed=1;
+    this.ySpeed=0;
     this.fishMove=()=>{
-        let fishMoveTimer = setTimeout(()=>{
-            document.querySelector('.guppy').style.left=fish.x;
-        }, 100)
+ 
     }
     console.log(this)
 
@@ -57,18 +58,32 @@ newFishButton.addEventListener('click', ()=>{
     console.log(globalFishTotal);
     console.log(fishArray[globalFishTotal]);
     $('.aquarium').append(`<div class='guppy' id='fish${newFish.id}''><div>`);
-        setTimeout(()=>{
-            // $(`#fish${newFish.id}.guppy`).css('left')=fishArray[globalFishTotal].x;
-            document.querySelector(`#fish${newFish.id}.guppy`).style.left=newFish.x;
-            document.querySelector(`#fish${newFish.id}.guppy`).style.left=newFish.y;
-        }, 100)
+        $()
+        // setTimeout(()=>{
+        //     // $(`#fish${newFish.id}.guppy`).css('left')=fishArray[globalFishTotal].x;
+        //     document.querySelector(`#fish${newFish.id}.guppy`).style.left=newFish.x;
+        //     document.querySelector(`#fish${newFish.id}.guppy`).style.left=newFish.y;
+        // }, 100)
         
     globalFishTotal++;
 
 })
 
 let mainTimer=setInterval(()=>{
-    console.log(`timer`)
+    console.log(`timer`);
+    console.log(fishArray)
+    fishArray.forEach((fish, i)=>{
+        console.log(fish);
+        fish.x+=fish.xSpeed;
+        fish.y+=fish.ySpeed;
+        document.querySelector(`#fish${i}.guppy`).style.left=`${fish.x}px`;
+        document.querySelector(`#fish${i}.guppy`).style.top=`${fish.y}px`;
+        
+        if(fish.x>screenWidth-35 || fish.x<25){
+            fish.xSpeed=fish.xSpeed*-1;
+        }
+    });
+
 }, 100);
 
 </script>
@@ -89,7 +104,7 @@ let mainTimer=setInterval(()=>{
 
     .guppy {
         padding: 10px;
-        position: fixed;
+        position: absolute;
         background: red;
         width: 5px;
         height: 5px;
