@@ -28,7 +28,7 @@
 
 
 function Fish (id, x, y ){
-    this.x=Math.floor(Math.random()*600)
+    this.x=Math.floor(Math.random()*500)
     this.y=Math.floor(Math.random()*350);
     this.class='guppy';
     this.id=globalFishTotal;
@@ -58,29 +58,29 @@ newFishButton.addEventListener('click', ()=>{
     console.log(globalFishTotal);
     console.log(fishArray[globalFishTotal]);
     $('.aquarium').append(`<div class='guppy' id='fish${newFish.id}''><div>`);
-        $()
-        // setTimeout(()=>{
-        //     // $(`#fish${newFish.id}.guppy`).css('left')=fishArray[globalFishTotal].x;
-        //     document.querySelector(`#fish${newFish.id}.guppy`).style.left=newFish.x;
-        //     document.querySelector(`#fish${newFish.id}.guppy`).style.left=newFish.y;
-        // }, 100)
+    document.querySelector(`#fish${newFish.id}.guppy`).style.backgroundImage='url("https://lh3.googleusercontent.com/pw/AM-JKLXWbo1nf85o1VkGNimWYedihXRaC-wyKLwFz2DcitCRa8TnmzGVYd-6j_CeaLvWg6mMxByl-VokOYS8fPKh_eDAY-qN8vMFDYh7VY4zGiUQfiCzMJ0PT_dNwGGpA27DPeH5N7weMnk_3kQuRHjV_Qzgyg=w659-h675-no?authuser=0")'
         
     globalFishTotal++;
 
 })
 
 let mainTimer=setInterval(()=>{
-    console.log(`timer`);
-    console.log(fishArray)
     fishArray.forEach((fish, i)=>{
         console.log(fish);
         fish.x+=fish.xSpeed;
         fish.y+=fish.ySpeed;
+        fish.ySpeed+=Math.floor(Math.random()*5);
+        if (fish.ySpeed >= 10) {
+            fish.ySpeed=fish.ySpeed*-1;
+        }
         document.querySelector(`#fish${i}.guppy`).style.left=`${fish.x}px`;
         document.querySelector(`#fish${i}.guppy`).style.top=`${fish.y}px`;
         
-        if(fish.x>screenWidth-35 || fish.x<25){
+        if(fish.x>=screenWidth-35 || fish.x<=25){
             fish.xSpeed=fish.xSpeed*-1;
+        }
+        if(fish.y<=25){
+            fish.ySpeed=(fish.ySpeed*-1);
         }
     });
 
@@ -94,7 +94,7 @@ let mainTimer=setInterval(()=>{
         border-color: black;
         width: 600px;
         height: 400px;
-        background-color: teal;
+        /* background-color: teal; */
     }
 
     .controls {
@@ -103,10 +103,13 @@ let mainTimer=setInterval(()=>{
     }
 
     .guppy {
-        padding: 10px;
+        padding: 30px;
         position: absolute;
-        background: red;
-        width: 5px;
-        height: 5px;
+        /* background: red; */
+        background-position: center;
+        background-size: cover;
+        width: 10px;
+        height: 10px;
+        border: 1px, solid, black
     }
 </style>
